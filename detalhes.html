@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes</title>
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(24, 24, 24);
+        }
+        body{
+            background-color: #F6F8FB;
+        }
+        h1{
+            width: 100px;
+            height: auto;
+            align-self: center;
+            margin: auto;
+            padding: 10px;
+        }
+        .detalhes-card{
+            width: 400px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            align-self: center;
+            margin:auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px darkgray;
+        }
+        .grid-container{
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            height: 100px;
+        }
+        .grid-container > div{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-content: center;
+        }
+        .grid-container p{
+            padding: 5px;
+        }
+        .evolution-chain-container{
+            display: flex;
+            height: 50px;
+            justify-content: center;
+            gap: 10px;
+        }
+        .evolution-chain-container{
+            text-transform: capitalize;
+        }
+        #tipo{
+            text-transform: uppercase;
+        }
+        #nome-pokemom{
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalhes</h1>
+    <div class="detalhes-card">
+        <h2 id="nome-pokemom"></h2>
+        <img src="" id="imagem-pokemom">
+        <div class="grid-container">
+            <div><p>HP: </p><p id="hp"></p></div>
+            <div><p>ATAQUE: </p><p id="ataque"></p></div>
+            <div><p>PESO: </p><p id="peso"></p></div>
+            <div><p>ALTURA: </p><p id="altura"></p></div>
+        </div>
+        <h3>Tipo: </h3>
+        <div id="tipo"></div>
+        <h3>Curiosidade:</h3>
+        <div id="descricao"></div>
+        <h3>Cadeia de evolução:</h3>
+        <div class="evolution-chain-container">
+            <p class="evo"></p>
+            <p class="evo"></p>
+            <p class="evo"></p>
+        </div>
+    </div>
+</body>
+<script src="detalhes.js"></script>
+</html>

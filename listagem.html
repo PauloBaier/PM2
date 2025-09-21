@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>listagem</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background:#f6f8fb; 
+      display:flex; 
+      flex-direction:column; 
+      align-items:center; 
+      padding:20px; 
+    }
+
+    #controls { 
+      margin-bottom:12px; 
+    }
+    .pokemon-card { 
+      background:white; 
+      border-radius:10px; 
+      padding:12px; 
+      margin:8px; 
+      width:200px; 
+      text-align:center; 
+      box-shadow:0 2px 6px rgba(0,0,0,0.12); 
+    }
+
+    img 
+    { width:96px; 
+      height:96px;
+     }
+
+    .favorito { 
+      color:gold; 
+      font-weight:700; 
+    }
+
+    .grid { 
+      display:flex; 
+      flex-wrap:wrap;
+     justify-content:center; 
+     gap:10px; 
+    }
+    button { 
+      padding:6px 10px;
+     border-radius:6px; 
+     border:1px solid #ccc; 
+     background:#fff; 
+     cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>Lista de Pokémons</h1>
+
+  <div id="controls">
+    <button id="btnMostrarTodos">Mostrar todos</button>
+    <button id="btnFavoritos">Mostrar favoritos</button>
+  </div>
+
+  <div id="pokemons" class="grid"></div>
+
+  <script>
+    
+    const listarPokemons = [
+      { numero: 1, nome: "pikachu", tipo: "eletrico", imagem: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png", favoritado: false },
+      { numero: 2, nome: "squirtle", tipo: "agua", imagem: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png", favoritado: true },
+      { numero: 3, nome: "bulbasaur", tipo: "grama", imagem: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", favoritado: true },
+      { numero: 4, nome: "charmander", tipo: "fogo", imagem: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png", favoritado: false }
+    ];
+
+   
+    localStorage.setItem("listaPokemons", JSON.stringify(listarPokemons));
+
+    
+    const listaDoStorage = JSON.parse(localStorage.getItem("listaPokemons") || "[]");
+
+
+    const container = document.getElementById("pokemons");
+
+   
+    function renderizar(lista) {
+      container.innerHTML = "";
+      lista.forEach(pokemon => {
+        const card = document.createElement("div");
+        card.className = "pokemon-card";
+
+        
+        card.innerHTML = `
+          <img src="${pokemon.imagem}" alt="${pokemon.nome}">
+          <h3>${pokemon.nome}</h3>
+          <p>Tipo: ${pokemon.tipo}</p>
+          <p class="${pokemon.favoritado ? 'favorito' : ''}">${pokemon.favoritado ? '⭐ Favorito' : 'Não favoritado'}</p>
+          <button data-num="${pokemon.numero}" class="btnToggle">Alternar favorito</button>
+        `;
+
+        container.appendChild(card);
+      });
+
+      
+      document.querySelectorAll(".btnToggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const num = Number(btn.dataset.num);
+          toggleFavorito(num);
+        });
+      });
+    }
+
+  
+
+    function toggleFavorito(numero) {
+      const lista = JSON.parse(localStorage.getItem("listaPokemons") || "[]");
+      const idx = lista.findIndex(p => p.numero === numero);
+      if (idx === -1) return;
+      lista[idx].favoritado = !lista[idx].favoritado;
+      localStorage.setItem("listaPokemons", JSON.stringify(lista));
+      renderizar(lista); // re-renderiza com novo estado
+    }
+
+    
+    document.getElementById("btnFavoritos").addEventListener("click", () => {
+      const lista = JSON.parse(localStorage.getItem("listaPokemons") || "[]");
+      renderizar(lista.filter(p => p.favoritado));
+    });
+
+    document.getElementById("btnMostrarTodos").addEventListener("click", () => {
+      const lista = JSON.parse(localStorage.getItem("listaPokemons") || "[]");
+      renderizar(lista);
+    });
+
+    
+    renderizar(listaDoStorage);
+  </script>
+</body>
+</html>
