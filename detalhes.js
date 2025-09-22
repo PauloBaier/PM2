@@ -19,32 +19,3 @@ const jsonDetalhes = JSON.stringify(detalhes)
 console.log(jsonDetalhes)
 
 localStorage.setItem("pokemom", jsonDetalhes);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-var DetalhesPokemom = JSON.parse(localStorage.getItem("pokemom"))
-preencherCardDetalhes(DetalhesPokemom)
-
-
-function preencherCardDetalhes(pokemom){
-    var nome = document.getElementById("nome-pokemom")
-    var img = document.getElementById("imagem-pokemom")
-    var hp = document.getElementById("hp")
-    var ataque = document.getElementById("ataque")
-    var peso = document.getElementById("peso")
-    var altura = document.getElementById("altura")
-    var tipo = document.getElementById("tipo")
-    var descricao = document.getElementById("descricao")
-    var evo = document.getElementsByClassName("evo")
-
-    nome.textContent = pokemom.nome
-    img.src = pokemom.imagem
-    hp.textContent = pokemom.hp
-    ataque.textContent = pokemom.ataque
-    peso.textContent = pokemom.peso + " KG"
-    altura.textContent = pokemom.altura + " M"
-    tipo.textContent = pokemom.tipo
-    descricao.textContent = pokemom.descricao
-    Array.from(evo).forEach((e,index) => {
-        e.textContent = pokemom["evolution-chain"][index]
-    })
-}
